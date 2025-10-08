@@ -1,1 +1,38 @@
-to be edited!!!
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/AadhieSec-git/Devops-git.git',
+                    credentialsId: 'github-token'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the application...'
+                // If just HTML, nothing to compile
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // You could add HTML lint, or just skip
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to Apache web root...'
+                sh '''
+                    sudo rm -rf /var/www/html/*
+                    sudo cp -r * /var/www/html/
+                '''
+            }
+        }
+    }
+}
+
